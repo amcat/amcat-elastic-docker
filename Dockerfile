@@ -2,7 +2,6 @@ FROM elasticsearch:5.4.0
 
 RUN elasticsearch-plugin install analysis-icu 
 
-
 RUN curl -L https://github.com/amcat/hitcount/archive/5.4.0.tar.gz | tar -zxvf - -C /usr/share/elasticsearch/plugins/
 
 WORKDIR /usr/share/elasticsearch/config/scripts

@@ -1,9 +1,11 @@
-FROM elasticsearch:2.4.4
+FROM docker.elastic.co/elasticsearch/elasticsearch:5.4.3
 
-RUN /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head \
-    && /usr/share/elasticsearch/bin/plugin install analysis-icu \
-    && /usr/share/elasticsearch/bin/plugin install amcat/hitcount/2.4.4
+RUN bin/elasticsearch-plugin install analysis-icu \
+    && bin/elasticsearch-plugin install https://github.com/amcat/hitcount/releases/download/5.4.3/hitcount-5.4.3-plugin.zip
 
-RUN wget -q https://raw.githubusercontent.com/amcat/amcat/master/config/elasticsearch/amcat_remove_from_set.groovy -O /etc/elasticsearch/scripts/amcat_remove_from_set.groovy \
-    && wget -q https://raw.githubusercontent.com/amcat/amcat/master/config/elasticsearch/amcat_add_to_set.groovy -O /etc/elasticsearch/scripts/amcat_add_to_set.groovy \
-    && wget -q https://raw.githubusercontent.com/amcat/amcat/master/config/elasticsearch/amcat_lead.groovy -O /etc/elasticsearch/scripts/amcat_lead.groovy
+RUN mkdir config/scripts \
+    && wget -q https://raw.githubusercontent.com/amcat/amcat/master/config/elasticsearch/amcat_remove_from_set.groovy -O config/scripts/amcat_remove_from_set.groovy \
+    && wget -q https://raw.githubusercontent.com/amcat/amcat/master/config/elasticsearch/amcat_add_to_set.groovy -O config/scripts/amcat_add_to_set.groovy \
+    && wget -q https://raw.githubusercontent.com/amcat/amcat/master/config/elasticsearch/amcat_lead.groovy -O config/scripts/amcat_lead.groovy
+
+ENV xpack.security.enabled=false

@@ -9,3 +9,5 @@ RUN mkdir config/scripts \
     && wget -q https://raw.githubusercontent.com/amcat/amcat/master/config/elasticsearch/amcat_lead.groovy -O config/scripts/amcat_lead.groovy
 
 ENV xpack.security.enabled=false
+
+ADD elasticsearch.yml config/elasticsearch.yml

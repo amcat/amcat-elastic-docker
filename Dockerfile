@@ -10,4 +10,7 @@ RUN mkdir config/scripts \
 
 ENV xpack.security.enabled=false
 
-ADD elasticsearch.yml config/elasticsearch.yml
+ADD elasticsearch.yml /usr/share/elasticsearch/config/
+USER root
+RUN chown elasticsearch:elasticsearch config/elasticsearch.yml
+USER elasticsearch
